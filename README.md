@@ -2,7 +2,7 @@
 Using Kaggle "NBA games data" for achieving interesting insights over this data
 
 
-##Steps:
+## Steps:
 1. open a git repo with scripts divided for each project task
 2. dataset https://www.kaggle.com/datasets/nathanlauga/nba-games?select=games.csv
 3. select at least 3 tables and list their columns - build full scheme
@@ -11,8 +11,8 @@ Using Kaggle "NBA games data" for achieving interesting insights over this data
 6. create the queries (data analysis)
 7. create python scripts for data (integrate)
 
-##Tables:
-###teams table
+## Tables:
+### teams table
 * Team ID
 * ABBREVIATION
 * NICKNAME
@@ -21,7 +21,7 @@ Using Kaggle "NBA games data" for achieving interesting insights over this data
 * ARENA
 * ARENACAPACITY
 
-###games table
+### games table
 * GAME_DATE_EST
 * GAME_ID
 * HOME_TEAM_ID
@@ -41,7 +41,7 @@ Using Kaggle "NBA games data" for achieving interesting insights over this data
 * REB_away
 * HOME_TEAM_WINS
 
-###ranking table
+### ranking table
 * TEAM_ID
 * SEASON_ID (startwith 2 only)
 * STANDINGSDATE
@@ -52,13 +52,13 @@ Using Kaggle "NBA games data" for achieving interesting insights over this data
 * L (looses)
 * W_PCT
 
-###players table
+### players table
 * PLAYER_NAME
 * TEAM_ID
 * PLAYER_ID
 * SEASON
 
-###games details (game per player) table
+### games details (game per player) table
 * GAME_ID
 * PLAYER_ID
 * START_POSITION
