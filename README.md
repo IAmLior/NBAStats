@@ -59,24 +59,24 @@ players table
 * SEASON
 
 games details (game per player) table
-	* GAME_ID
-	- PLAYER_ID
-	- START_POSITION
-	- MIN
-	- FGM
-	- FGA
-	- FG_PCT
-	- FG3M
-	- FG3A
-	- FG3_PCT
-	- FTM
-	- FTA
-	- FT_PCT
-	- REB
-	- AST
-	- STL
-	- BLK
-	- TO
-	- PF
-	- PTS
-	- PLUS_MINUS
+* GAME_ID
+* PLAYER_ID
+* START_POSITION
+* MIN
+* FGM
+* FGA
+* FG_PCT
+* FG3M
+* FG3A
+* FG3_PCT
+* FTM
+* FTA
+* FT_PCT
+* REB
+* AST
+* STL
+* BLK
+* TO
+* PF
+* PTS
+* PLUS_MINUS
