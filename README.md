@@ -3,13 +3,12 @@ Using Kaggle "NBA games data" for achieving interesting insights over this data
 
 
 ## Steps:
-1. open a git repo with scripts divided for each project task
-2. dataset https://www.kaggle.com/datasets/nathanlauga/nba-games?select=games.csv
-3. select at least 3 tables and list their columns - build full scheme
-4. create insertion scripts - figure out how to make it correctly according to the scheme
-5. use GPT for selecting complicated queries over the data
-6. create the queries (data analysis)
-7. create python scripts for data (integrate)
+1. our dataset https://www.kaggle.com/datasets/nathanlauga/nba-games?select=games.csv
+2. select at least 3 tables and list their columns - build full scheme
+3. create insertion scripts - figure out how to make it correctly according to the scheme
+4. use GPT for selecting complicated queries over the data
+5. create the queries (data analysis)
+6. create python scripts for data (integrate)
 
 ## Tables:
 ### teams table
