@@ -13,7 +13,7 @@ Steps:
 
 Tables:
 teams table
-	- Team ID
+* Team ID
 	- ABBREVIATION
 	- NICKNAME
 	- YEARFOUNDED
