@@ -14,52 +14,52 @@ Steps:
 Tables:
 teams table
 * Team ID
-	- ABBREVIATION
-	- NICKNAME
-	- YEARFOUNDED
-	- CITY
-	- ARENA
-	- ARENACAPACITY
+* ABBREVIATION
+* NICKNAME
+* YEARFOUNDED
+* CITY
+* ARENA
+* ARENACAPACITY
 
 games table
-	- GAME_DATE_EST
-	- GAME_ID
-	- HOME_TEAM_ID
-	- VISITOR_TEAM_ID
-	- SEASON
-	- PTS_home
-	- FG_PCT_home
-	- FT_PCT_home
-	- FG3_PCT_home
-	- AST_home
-	- REB_home
-	- PTS_away
-	- FG_PCT_away
-	- FT_PCT_away
-	- FG3_PCT_away
-	- AST_away
-	- REB_away
-	- HOME_TEAM_WINS
+* GAME_DATE_EST
+* GAME_ID
+* HOME_TEAM_ID
+* VISITOR_TEAM_ID
+* SEASON
+* PTS_home
+* FG_PCT_home
+* FT_PCT_home
+* FG3_PCT_home
+* AST_home
+* REB_home
+* PTS_away
+* FG_PCT_away
+* FT_PCT_away
+* FG3_PCT_away
+* AST_away
+* REB_away
+* HOME_TEAM_WINS
 
 ranking table
-	- TEAM_ID
-	- SEASON_ID (startwith 2 only)
-	- STANDINGSDATE
-	- CONFERENCE
-	- TEAM
-	- G (games)
-	- W (wins)
-	- L (looses)
-	- W_PCT
+* TEAM_ID
+* SEASON_ID (startwith 2 only)
+* STANDINGSDATE
+* CONFERENCE
+* TEAM
+* G (games)
+* W (wins)
+* L (looses)
+* W_PCT
 
 players table
-	- PLAYER_NAME
-	- TEAM_ID
-	- PLAYER_ID
-	- SEASON
+* PLAYER_NAME
+* TEAM_ID
+* PLAYER_ID
+* SEASON
 
 games details (game per player) table
-	- GAME_ID
+	* GAME_ID
 	- PLAYER_ID
 	- START_POSITION
 	- MIN
