@@ -1,0 +1,1 @@
+# Here add ingestion script for teams table
