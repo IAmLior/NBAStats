@@ -1,8 +1,14 @@
 # NBAStats
 Using Kaggle "NBA games data" for achieving interesting insights over this data
 
+## Getting started:
+1. create a Cassandra DB instance. You van do it using docker.
+    ```docker pull cassandra:latest```
+    ```docker run...```
+2. Configure the NBAStats keyspace on your cassandra cluster.
+    ```create keyspace if not exists NBAStats with replication = { 'class': 'SimpleStrategy', replication_factor': 1 };```
 
-## Steps:
+## Steps (Internal):
 1. our dataset https://www.kaggle.com/datasets/nathanlauga/nba-games?select=games.csv
 2. select at least 3 tables and list their columns - build full scheme
 3. create insertion scripts - figure out how to make it correctly according to the scheme
