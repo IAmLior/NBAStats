@@ -11,7 +11,7 @@ class Team(Model):
     year_founded = columns.Integer()
     city = columns.Text()
     arena = columns.Text()
-    arena_capacity = columns.Integer(default=0)
+    arena_capacity = columns.Integer()
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Team)
@@ -23,35 +23,20 @@ with open(csv_file_path, mode='r') as data:
     for row in csv_reader:
         teams_mapping.append(row)
 
-# empty_values = []
-# for team in teams_mapping:
-#     for key, value in team.items():
-#         if value == '':
-#             empty_values.append({
-#                 'team': team,
-#                 'key': key
-#             })
-
-# for item in empty_values:
-#     del item['team'][item['key']]
-
 for team in teams_mapping:
     for key, value in team.items():
         if value == '':
             team[key] = None
 
-    team_model = Team.create(team_id = team['TEAM_ID'],
-                                  abbreviation = team['ABBREVIATION'],
-                                  nickname = team['NICKNAME'],
-                                  year_founded = team['YEARFOUNDED'],
-                                  city = team['CITY'],
-                                  arena = team['ARENA'],
-                                  arena_capacity = team['ARENACAPACITY'] if  team['ARENACAPACITY'] is not None else 0)
+    team_model = Team.create(
+        team_id = team['TEAM_ID'],
+        abbreviation = team['ABBREVIATION'],
+        nickname = team['NICKNAME'],
+        year_founded = team['YEARFOUNDED'],
+        city = team['CITY'],
+        arena = team['ARENA'],
+        arena_capacity = team['ARENACAPACITY'] if  team['ARENACAPACITY'] is not None else 0)
     print(f"Created team {team['NICKNAME']}")
 
 print(f"Created {Team.objects.count()} teams.")
-
-# over_20k = Team.objects(arena_capacity>20000)
-# for instance in over_20k:
-#     print(instance.nickname)
 

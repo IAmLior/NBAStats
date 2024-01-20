@@ -51,7 +51,6 @@ Using Kaggle "NBA games data" for achieving interesting insights over this data
 * SEASON_ID (startwith 2 only)
 * STANDINGSDATE
 * CONFERENCE
-* TEAM
 * G (games)
 * W (wins)
 * L (looses)
