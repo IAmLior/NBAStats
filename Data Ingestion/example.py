@@ -6,18 +6,22 @@ cassandra_session = cassandra_cluster.connect()
 cassandra_keyspace_name = 'nbatests'
 cassandra_session.set_keyspace(cassandra_keyspace_name),
 
-# Define your insert query
-insert_query = "INSERT INTO graetstudents (student_id, name, email, enrollment_year) VALUES (%s, %s, %s, %s)"
-prepared_query = cassandra_session.prepare(insert_query)
+query = "SELECT * FROM Ranking"
+prepared_query = cassandra_session.prepare(query)
+results = cassandra_session.execute(prepared_query)
+pass
 
-# Data to insert
-data_to_insert = ('12345', 'lior abuhav', 'lala@lala.com', 2020)
+# # Define your insert query
+# insert_query = "INSERT INTO graetstudents (student_id, name, email, enrollment_year) VALUES (%s, %s, %s, %s)"
 
-# Execute the prepared query with the data
-cassandra_session.execute(prepared_query, data_to_insert)
+# # Data to insert
+# data_to_insert = ('12345', 'lior abuhav', 'lala@lala.com', 2020)
 
-# Close the connection
-cassandra_cluster.shutdown()
+# # Execute the prepared query with the data
+# 
+
+# # Close the connection
+# cassandra_cluster.shutdown()
 
 
 

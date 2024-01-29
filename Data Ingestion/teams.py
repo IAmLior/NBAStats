@@ -13,6 +13,8 @@ class Team(Model):
     arena = columns.Text()
     arena_capacity = columns.Integer()
 
+    __table_name__ = "Teams"
+
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Team)
 csv_file_path = 'Data\\teams.csv'

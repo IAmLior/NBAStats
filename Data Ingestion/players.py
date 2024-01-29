@@ -10,6 +10,8 @@ class Player(Model):
     player_name = columns.Text()
     season = columns.Integer()
 
+    __table_name__ = "Players"
+
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Player)

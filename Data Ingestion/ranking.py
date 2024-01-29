@@ -6,13 +6,15 @@ import csv
 
 class Rank(Model):
     team_id = columns.Integer(primary_key=True)
-    season = columns.Integer()
-    standing_date = columns.Date()
+    season = columns.Integer(primary_key=True)
+    standing_date = columns.Date(primary_key=True)
     conference = columns.Text()
     games = columns.Integer()
     wins = columns.Integer()
     losses = columns.Integer()
     win_pct = columns.Float()
+
+    __table_name__ = "Ranking"
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Rank)
