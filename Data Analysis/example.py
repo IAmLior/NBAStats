@@ -1,6 +1,5 @@
 from cassandra.cluster import Cluster
 
-# Connect to the Cassandra cluster
 cassandra_cluster = Cluster()
 cassandra_session = cassandra_cluster.connect()
 cassandra_keyspace_name = 'nbatests'
@@ -11,17 +10,9 @@ prepared_query = cassandra_session.prepare(query)
 results = cassandra_session.execute(prepared_query)
 pass
 
-# # Define your insert query
-# insert_query = "INSERT INTO graetstudents (student_id, name, email, enrollment_year) VALUES (%s, %s, %s, %s)"
 
-# # Data to insert
-# data_to_insert = ('12345', 'lior abuhav', 'lala@lala.com', 2020)
 
-# # Execute the prepared query with the data
-# 
-
-# # Close the connection
-# cassandra_cluster.shutdown()
+cassandra_cluster.shutdown()
 
 
 
