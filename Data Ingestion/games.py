@@ -22,7 +22,9 @@ class Game(Model):
     fg3_pct_away = columns.Float()
     ast_away = columns.Integer()
     reb_away = columns.Integer()
-    home_tewm_wins = columns.Boolean()
+    home_team_wins = columns.Boolean()
+
+    __table_name__ = "Games"
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Game)
@@ -57,7 +59,7 @@ for game in games_mapping:
         fg3_pct_away = game['FG3_PCT_away'],
         ast_away = game['AST_away'] if isinstance(game['AST_away'], int) else 0,
         reb_away = game['REB_away'] if isinstance(game['REB_away'], int) else 0,
-        home_tewm_wins = game['HOME_TEAM_WINS']
+        home_team_wins = game['HOME_TEAM_WINS']
     )
     print(f"Created game {game['GAME_ID']}")
 
