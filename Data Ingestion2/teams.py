@@ -5,6 +5,7 @@ from cassandra.cqlengine.management import sync_table
 import csv
 
 class Team(Model):
+    
     team_id = columns.Integer(primary_key=True)
     abbreviation = columns.Text(max_length=3, min_length=3)
     nickname = columns.Text()
@@ -15,7 +16,7 @@ class Team(Model):
 
     __table_name__ = "Teams"
 
-connection.setup(['127.0.0.1'], 'nbatests')
+connection.setup(['127.0.0.1'], 'nbatests22')
 sync_table(Team)
 csv_file_path = '/Users/dviryomtov/NBAStats/Data/teams.csv'
 
@@ -34,10 +35,10 @@ for team in teams_mapping:
         team_id = team['TEAM_ID'],
         abbreviation = team['ABBREVIATION'],
         nickname = team['NICKNAME'],
-        year_founded = team['YEARFOUNDED'],
+        yearfounded = team['YEARFOUNDED'],
         city = team['CITY'],
         arena = team['ARENA'],
-        arena_capacity = team['ARENACAPACITY'] if  team['ARENACAPACITY'] is not None else 0)
+        arenacapacity = team['ARENACAPACITY'] if  team['ARENACAPACITY'] is not None else 0)
     print(f"Created team {team['NICKNAME']}")
 
 print(f"Created {Team.objects.count()} teams.")

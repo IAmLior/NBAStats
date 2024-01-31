@@ -13,7 +13,7 @@ class Player(Model):
     __table_name__ = "Players"
 
 
-connection.setup(['127.0.0.1'], 'nbatests')
+connection.setup(['127.0.0.1'], 'nbatests22')
 sync_table(Player)
 csv_file_path = '/Users/dviryomtov/NBAStats/Data/players.csv'
 

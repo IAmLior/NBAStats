@@ -6,15 +6,13 @@ import csv
 
 class Rank(Model):
     team_id = columns.Integer(primary_key=True)
-    season = columns.Integer(partition_key=True)
-    standing_date = columns.Date(partition_key=True)
+    season = columns.Integer(primary_key=True)
+    standing_date = columns.Date(primary_key=True)
     conference = columns.Text()
     games = columns.Integer()
     wins = columns.Integer()
     losses = columns.Integer()
     win_pct = columns.Float()
-    home_record = columns.Text()
-    road_record = columns.Text()
 
     __table_name__ = "Ranking"
 
@@ -43,9 +41,7 @@ for rank in ranking_mapping:
         games = rank['G'],
         wins = rank['W'],
         losses = rank['L'],
-        win_pct = rank['W_PCT'],
-        home_record = rank['HOME_RECORD'],
-        road_record = rank['ROAD_RECORD']
+        win_pct = rank['W_PCT']
     )
     print(f"Created rank for team {rank['TEAM_ID']} by date {rank['STANDINGSDATE']} in season{rank['SEASON_ID'][1:]}")
 

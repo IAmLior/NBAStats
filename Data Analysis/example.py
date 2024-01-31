@@ -2,10 +2,10 @@ from cassandra.cluster import Cluster
 
 cassandra_cluster = Cluster()
 cassandra_session = cassandra_cluster.connect()
-cassandra_keyspace_name = 'nbatests'
+cassandra_keyspace_name = 'nbatests22'
 cassandra_session.set_keyspace(cassandra_keyspace_name),
 
-query = "SELECT * FROM Ranking"
+query = "SELECT team_id, season, HOME_RECORD, ROAD_RECORD FROM Ranking WHERE games = 82 ALLOW FILTERING;"
 prepared_query = cassandra_session.prepare(query)
 results = cassandra_session.execute(prepared_query)
 pass
