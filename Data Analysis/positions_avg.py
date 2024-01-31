@@ -16,24 +16,9 @@ positions_prepared_query = cassandra_session.prepare(positions_query)
 positions_results = cassandra_session.execute(positions_prepared_query)
 positions_df = pd.DataFrame(positions_results)
 
-# positions_df.set_index('start_position', inplace=True)
 
-# # Plotting the data
-# ax = positions_df.plot(kind='bar', figsize=(10, 6))
-
-# # Customize the plot
-# ax.set_ylabel('Average Value')
-# ax.set_title('Average Performance by Position')
-# plt.legend(title='Metrics', bbox_to_anchor=(1.05, 1), loc='upper left')
-# plt.show()
-
-# Set the start_position column as the index for better plotting
 positions_df.set_index('start_position', inplace=True)
-
-# Plotting the data
 ax = positions_df.plot(kind='bar', figsize=(10, 6))
-
-# Adding vertical labels
 for p in ax.patches:
     ax.annotate(
         f'{p.get_height():.2f}', 
@@ -45,12 +30,7 @@ for p in ax.patches:
         color='black',
         fontsize=8
     )
-
-# Customize the plot
 ax.set_ylabel('Average Value')
 ax.set_title('Average Performance by Position')
 plt.legend(title='Metrics', bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.show()
-
-
-cassandra_cluster.shutdown()
