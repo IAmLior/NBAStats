@@ -5,11 +5,20 @@ from cassandra.cqlengine.management import sync_table
 from datetime import datetime
 import csv
 
+def get_valid_number(number: str):
+    if number.isdigit():
+        return int(number)
+    
+    if number[:-2].isdigit():
+        return int(number[:-2])
+    
+    return 0
+
 class GamePerPlayer(Model):
     game_id = columns.Integer(primary_key=True)
     team_id = columns.Integer(primary_key=True)
     player_id = columns.Integer(primary_key=True)
-    start_position = columns.Text(max_length=1)
+    start_position = columns.Text(partition_key=True, max_length=1)
     minutes_played = columns.Time()
     fg_made = columns.Float()
     fg_attempted = columns.Float()
@@ -52,7 +61,7 @@ for gpp in game_per_player_mapping:
         game_id = gpp['GAME_ID'],
         team_id = gpp['TEAM_ID'],
         player_id = gpp['PLAYER_ID'],
-        start_position = gpp['START_POSITION'],
+        start_position = gpp['START_POSITION'] if gpp['START_POSITION'] is not None else 'B',
         minutes_played = min_played,
         fg_made = gpp['FGM'],
         fg_attempted = gpp['FGA'],
