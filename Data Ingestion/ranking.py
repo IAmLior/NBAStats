@@ -5,9 +5,9 @@ from cassandra.cqlengine.management import sync_table
 import csv
 
 class Rank(Model):
-    team_id = columns.Integer(primary_key=True)
+    team_id = columns.Integer(partition_key=True)
     season = columns.Integer(partition_key=True)
-    standing_date = columns.Date(partition_key=True)
+    standing_date = columns.Date(primary_key=True)
     conference = columns.Text()
     games = columns.Integer()
     wins = columns.Integer()
@@ -18,7 +18,7 @@ class Rank(Model):
 
     __table_name__ = "Ranking"
 
-connection.setup(['127.0.0.1'], 'nbatests22')
+connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Rank)
 csv_file_path = '/Users/dviryomtov/NBAStats/Data/ranking.csv'
 
