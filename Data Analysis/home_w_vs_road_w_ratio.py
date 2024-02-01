@@ -1,6 +1,7 @@
 from cassandra.cluster import Cluster
 import matplotlib.pyplot as plt
 
+
 cassandra_cluster = Cluster()
 cassandra_session = cassandra_cluster.connect()
 cassandra_keyspace_name = 'nbatests'
@@ -31,15 +32,13 @@ for team, data in teams.items():
             ratio = 0
         ratios.append(ratio)
         seasons.append(str(season['season']))
-    # Sort the seasons in ascending order
+
     seasons, ratios = zip(*sorted(zip(seasons, ratios)))
     team_ratios[team] = (seasons, ratios)
 
-# Determine the maximum ratio value across all teams
 max_ratio = max(max(ratios) for _, (_, ratios) in team_ratios.items())
 
-# Create a full-screen figure
-plt.figure(figsize=(20, 10))  # You may adjust the figsize according to your screen resolution
+plt.figure(figsize=(20, 10))
 
 # Plotting
 for team, (seasons, ratios) in team_ratios.items():
@@ -47,15 +46,13 @@ for team, (seasons, ratios) in team_ratios.items():
 
 plt.xlabel('Season')
 plt.ylabel('Ratio (Home Wins / Road Wins)')
-plt.title('Ratio of Home Wins to Road Wins for Each Team Over Seasons')
+plt.title('Ratio of Home Wins to Road Wins for Each Team Over Full Seasons')
 plt.xticks(rotation=45)
 plt.grid(True)
 
-# Place legend under the plot
 plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=5)
 plt.subplots_adjust(bottom=0.3)  # Adjust bottom margin to make room for the legend
 
-# Set y-axis ticks to start from 0 and display intervals of 0.2
 plt.yticks([i / 5 for i in range(int(max_ratio * 5) + 2)])
 
 plt.show()

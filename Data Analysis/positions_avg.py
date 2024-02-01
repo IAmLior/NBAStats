@@ -1,9 +1,8 @@
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
-from matplotlib.ticker import MaxNLocator
+
 
 cassandra_cluster = Cluster()
 cassandra_session = cassandra_cluster.connect()
@@ -16,7 +15,7 @@ positions_prepared_query = cassandra_session.prepare(positions_query)
 positions_results = cassandra_session.execute(positions_prepared_query)
 positions_df = pd.DataFrame(positions_results)
 
-
+# Plotting
 positions_df.set_index('start_position', inplace=True)
 ax = positions_df.plot(kind='bar', figsize=(10, 6))
 for p in ax.patches:
@@ -30,7 +29,9 @@ for p in ax.patches:
         color='black',
         fontsize=8
     )
+
 ax.set_ylabel('Average Value')
 ax.set_title('Average Performance by Position')
 plt.legend(title='Metrics', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
 plt.show()

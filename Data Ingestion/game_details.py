@@ -43,9 +43,9 @@ class GamePerPlayer(Model):
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(GamePerPlayer)
-gpp_csv_file_path = 'Data\\games_details.csv'
-games_csv_file_path = 'Data\\games.csv'
-players_csv_file_path = 'Data\\players.csv'
+gpp_csv_file_path = Path(__file__).parent.parent / 'Data/games_details.csv'
+games_csv_file_path = Path(__file__).parent.parent / 'Data/games.csv'
+players_csv_file_path = Path(__file__).parent.parent / 'Data/players.csv'
 
 with open(games_csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)

@@ -1,9 +1,8 @@
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
-from matplotlib.ticker import MaxNLocator
+
 
 cassandra_cluster = Cluster()
 cassandra_session = cassandra_cluster.connect()
@@ -16,6 +15,7 @@ scoring_pct_prepared_query = cassandra_session.prepare(scoring_pct_query)
 scoring_pct_results = cassandra_session.execute(scoring_pct_prepared_query)
 scoring_pct_df = pd.DataFrame(scoring_pct_results)
 
+# Plotting
 plt.figure(figsize=(12, 6))
 plt.scatter(scoring_pct_df['season'], scoring_pct_df['avg_fg'], label='Field Goal Percentage (avg_fg)', marker='o', alpha=0.7)
 plt.scatter(scoring_pct_df['season'], scoring_pct_df['avg_fg3'], label='Three-Point Percentage (avg_fg3)', marker='s', alpha=0.7)

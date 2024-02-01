@@ -3,6 +3,7 @@ from cassandra.query import dict_factory
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 cassandra_cluster = Cluster()
 cassandra_session = cassandra_cluster.connect()
 cassandra_keyspace_name = 'nbatests'
@@ -34,7 +35,6 @@ metrics = ['FG', 'FG3', 'FT']
 starting_5_results = [queries[f'{metric.lower()}_precentage_starting_5']['results'] for metric in metrics]
 bench_results = [queries[f'{metric.lower()}_precentage_bench']['results'] for metric in metrics]
 
-# Setting up the position of bars
 bar_width = 0.35
 index = np.arange(len(metrics))
 

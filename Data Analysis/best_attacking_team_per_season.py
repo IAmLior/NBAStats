@@ -1,6 +1,7 @@
 from cassandra.cluster import Cluster
 import matplotlib.pyplot as plt
 
+
 cassandra_cluster = Cluster()
 cassandra_session = cassandra_cluster.connect()
 cassandra_keyspace_name = 'nbatests'
@@ -10,7 +11,7 @@ query =  "SELECT season, team_id, team_nickname, AVG(pts) AS avg_points FROM gam
 
 prepared_query = cassandra_session.prepare(query)
 results = cassandra_session.execute(prepared_query)
-# Store the highest average points for each season
+
 highest_avg_points = {}
 
 for row in results:
@@ -25,21 +26,18 @@ sorted_data = sorted(highest_avg_points.items())
 seasons, teams_avg_points = zip(*sorted_data)
 teams, avg_points = zip(*teams_avg_points)
 
-# Creating the bar plot
+# Plotting
 plt.figure(figsize=(15, 8))
 plt.bar(range(len(seasons)), avg_points, color='skyblue')
 
-# Adding labels and title
 plt.xlabel('Season')
 plt.ylabel('Average Points')
-plt.title('Highest Average Points for Each Season')
+plt.title('Team With Highest Average Points In Each Season')
 plt.xticks(range(len(seasons)), seasons, rotation=45, ha='right')
 
-# Adding data labels
 for i in range(len(seasons)):
     plt.text(i, avg_points[i], f"{teams[i]}: {avg_points[i]}", ha='center', va='bottom')
 
-# Displaying the plot
 plt.tight_layout()
 plt.show()
 cassandra_cluster.shutdown()

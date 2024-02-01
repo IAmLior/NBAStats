@@ -1,9 +1,8 @@
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
-from matplotlib.ticker import MaxNLocator
+
 
 cassandra_cluster = Cluster()
 cassandra_session = cassandra_cluster.connect()
@@ -20,6 +19,7 @@ player_df['minutes_played'] = pd.to_datetime(player_df['minutes_played'], format
 player_df['minutes_played']
 player_df = player_df.sort_values(by='minutes_played')
 
+# Plotting
 plt.figure(figsize=(10, 6))
 plt.plot(player_df['minutes_played'], player_df['points'], marker='o', label='Points')
 plt.fill_between(player_df['minutes_played'], player_df['points'], alpha=0.2, color='skyblue', label='Area Under Graph')

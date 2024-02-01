@@ -5,6 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 
+
 cassandra_cluster = Cluster()
 cassandra_session = cassandra_cluster.connect()
 cassandra_keyspace_name = 'nbatests'
@@ -24,14 +25,16 @@ away_df = pd.DataFrame(away_games_results).rename(columns={'avg': 'avg_away'})
 games_df = pd.merge(home_df[['season', 'team_id', 'nickname',  'avg_home']], away_df[['season', 'team_id', 'nickname', 'avg_away']], on=['season', 'team_id', 'nickname'])
 games_df['ratio_diff'] = games_df['avg_home'] / games_df['avg_away']
 
+# Plotting
 plt.figure(figsize=(12, 8))
 sns.scatterplot(x='season', y='ratio_diff', hue='nickname', data=games_df, marker='o', s=100)
 plt.axhline(y=1, color='grey', linestyle='--', label='y = 1')
 plt.title('Ratio Difference between avg_home and avg_away by Team and Year')
 plt.xlabel('Season')
 plt.ylabel('Ratio Difference (avg_home / avg_away)')
-plt.legend(title='Team', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.legend(title='Team', bbox_to_anchor=(1.02, 1), loc='upper left') 
 plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+plt.tight_layout()
 plt.show()
 
 cassandra_cluster.shutdown()
