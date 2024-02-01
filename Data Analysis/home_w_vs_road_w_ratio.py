@@ -48,7 +48,7 @@ plt.xlabel('Season')
 plt.ylabel('Ratio (Home Wins / Road Wins)')
 plt.title('Ratio of Home Wins to Road Wins for Each Team Over Full Seasons')
 plt.xticks(rotation=45)
-plt.grid(True)
+plt.axhline(y=1, color='grey', linestyle='--', label='y = 1')
 
 plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), shadow=True, ncol=5)
 plt.subplots_adjust(bottom=0.3)  # Adjust bottom margin to make room for the legend
