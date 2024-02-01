@@ -31,7 +31,7 @@ class Game(Model):
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Game)
-csv_file_path = 'Data\\games.csv'
+csv_file_path = '/Users/dviryomtov/NBAStats/Data/games.csv'
 
 with open(csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)
