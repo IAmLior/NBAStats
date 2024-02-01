@@ -19,6 +19,7 @@ class GamePerPlayer(Model):
     game_date = columns.Date()
     team_id = columns.Integer(primary_key=True)
     player_id = columns.Integer(primary_key=True)
+    player_name = columns.Text()
     start_position = columns.Text(partition_key=True, max_length=1)
     minutes_played = columns.Time()
     fg_made = columns.Float()
@@ -43,12 +44,20 @@ connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(GamePerPlayer)
 gpp_csv_file_path = 'Data\\games_details.csv'
 games_csv_file_path = 'Data\\games.csv'
+players_csv_file_path = 'Data\\players.csv'
 
 with open(games_csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)
     games_dates_mapping = {}
     for row in csv_reader:
         games_dates_mapping[row['GAME_ID']] = row['GAME_DATE_EST']
+
+with open(players_csv_file_path, mode='r') as data:
+    csv_reader = csv.DictReader(data)
+    players_nicknames_mapping = {}
+    for row in csv_reader:
+        players_nicknames_mapping[row['PLAYER_ID']] = row['PLAYER_NAME']
+
 
 with open(gpp_csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)
@@ -70,6 +79,7 @@ for gpp in game_per_player_mapping:
         game_date = games_dates_mapping[gpp['GAME_ID']],
         team_id = gpp['TEAM_ID'],
         player_id = gpp['PLAYER_ID'],
+        player_name = players_nicknames_mapping[gpp['PLAYER_ID']] if gpp['PLAYER_ID'] in players_nicknames_mapping else gpp['PLAYER_ID'],
         start_position = gpp['START_POSITION'] if gpp['START_POSITION'] is not None else 'B',
         minutes_played = min_played,
         fg_made = gpp['FGM'],
