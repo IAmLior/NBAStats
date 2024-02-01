@@ -4,6 +4,7 @@ from cassandra.cqlengine import connection
 from cassandra.cqlengine.management import sync_table
 from datetime import datetime
 import csv
+from pathlib import Path
 
 def get_valid_number(number: str):
     if number.isdigit():

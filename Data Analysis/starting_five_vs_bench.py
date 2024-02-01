@@ -30,8 +30,6 @@ for key, value in queries.items():
     results = cassandra_session.execute(prepared_query)
     value['results'] = results.current_rows[0][key]
 
-#positions_df = pd.DataFrame(positions_results)
-
 metrics = ['FG', 'FG3', 'FT']
 starting_5_results = [queries[f'{metric.lower()}_precentage_starting_5']['results'] for metric in metrics]
 bench_results = [queries[f'{metric.lower()}_precentage_bench']['results'] for metric in metrics]

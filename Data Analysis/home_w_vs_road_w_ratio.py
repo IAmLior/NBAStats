@@ -6,17 +6,17 @@ cassandra_session = cassandra_cluster.connect()
 cassandra_keyspace_name = 'nbatests'
 cassandra_session.set_keyspace(cassandra_keyspace_name),
 
-query = " SELECT team_id, season, HOME_RECORD, ROAD_RECORD FROM Ranking WHERE games = 82 GROUP BY TEAM_id, SEASON ALLOW FILTERING ;"
+query = " SELECT team_id, team_nickname, season, HOME_RECORD, ROAD_RECORD FROM Ranking WHERE games = 82 GROUP BY TEAM_id, SEASON ALLOW FILTERING ;"
 prepared_query = cassandra_session.prepare(query)
 results = cassandra_session.execute(prepared_query)
 
 teams = {}
 r = results.current_rows
-for row in r:
-    if row.team_id in teams:
-        teams[row.team_id].append({'season': row.season, 'home_record': row.home_record, 'road_record': row.road_record})
+for row in results:
+    if row.team_nickname in teams:
+        teams[row.team_nickname].append({'season': row.season, 'home_record': row.home_record, 'road_record': row.road_record})
     else:
-        teams[row.team_id] = [{'season': row.season, 'home_record': row.home_record, 'road_record': row.road_record}]
+        teams[row.team_nickname] = [{'season': row.season, 'home_record': row.home_record, 'road_record': row.road_record}]
 
 team_ratios = {}
 for team, data in teams.items():
@@ -43,7 +43,7 @@ plt.figure(figsize=(20, 10))  # You may adjust the figsize according to your scr
 
 # Plotting
 for team, (seasons, ratios) in team_ratios.items():
-    plt.scatter(seasons, ratios, label=f'Team {team}', marker='o')
+    plt.scatter(seasons, ratios, label=f'{team}', marker='o')
 
 plt.xlabel('Season')
 plt.ylabel('Ratio (Home Wins / Road Wins)')
@@ -61,14 +61,3 @@ plt.yticks([i / 5 for i in range(int(max_ratio * 5) + 2)])
 plt.show()
 cassandra_cluster.shutdown()
 
-
-
-#creating keyspace - not working
-# create_keyspace_query = f"CREATE KEYSPACE IF NOT EXISTS {cassandra_keyspace_name} WITH replication = {{'class': 'SimpleStrategy', 'replication_factor': 3}}"
-# Execute the query to create the keyspace
-# a = session.execute(create_keyspace_query)
-
-#creating table -  not working
-# Define creation query
-# create_query = 'CREATE TABLE students (student_id UUID PRIMARY KEY, name TEXT, email TEXT, enrollment_year INT);'
-# students_table = cassandra_session.execute(create_query)
