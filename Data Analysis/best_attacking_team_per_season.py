@@ -39,9 +39,6 @@ plt.xticks(range(len(seasons)), seasons, rotation=45, ha='right')
 for i in range(len(seasons)):
     plt.text(i, avg_points[i], f"{teams[i]}: {avg_points[i]}", ha='center', va='bottom')
 
-# Adding description
-plt.figtext(0.5, 0.01, 'Data Source: Your Data Source', wrap=True, horizontalalignment='center', fontsize=10)
-
 # Displaying the plot
 plt.tight_layout()
 plt.show()
