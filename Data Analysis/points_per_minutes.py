@@ -10,14 +10,16 @@ cassandra_keyspace_name = 'nbatests'
 cassandra_session.set_keyspace(cassandra_keyspace_name)
 cassandra_session.row_factory = dict_factory
 
-player_query = "select player_name as name, points, minutes_played from game_per_player limit 100 ALLOW FILTERING;"
+player_query = "select player_name as name, points, minutes_played from game_per_player ALLOW FILTERING;"
 player_prepared_query = cassandra_session.prepare(player_query)
 player_results = cassandra_session.execute(player_prepared_query)
 player_df = pd.DataFrame(player_results)
 
 player_df['minutes_played'] = pd.to_datetime(player_df['minutes_played'], format='%H:%M:%S.%f')
-player_df['minutes_played']
+player_df['minutes_played'] = player_df['minutes_played'].dt.minute
+player_df = player_df[player_df['minutes_played'] <= 48]
 player_df = player_df.sort_values(by='minutes_played')
+player_df.dropna(subset=['minutes_played'], inplace=True)
 
 # Plotting
 plt.figure(figsize=(10, 6))
