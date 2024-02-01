@@ -2,7 +2,9 @@ from cassandra.cqlengine import columns
 from cassandra.cqlengine.models import Model
 from cassandra.cqlengine import connection
 from cassandra.cqlengine.management import sync_table
-import csv
+import csv  
+from pathlib import Path
+
 
 class Rank(Model):
     team_id = columns.Integer(partition_key=True)
@@ -21,8 +23,8 @@ class Rank(Model):
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Rank)
-ranking_csv_file_path = 'Data\\ranking.csv'
-teams_csv_file_path = 'Data\\teams.csv'
+ranking_csv_file_path = Path(__file__).parent.parent / 'Data/ranking.csv'
+teams_csv_file_path = Path(__file__).parent.parent / 'Data/teams.csv'
 
 with open(teams_csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)

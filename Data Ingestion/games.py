@@ -3,6 +3,7 @@ from cassandra.cqlengine.models import Model
 from cassandra.cqlengine import connection
 from cassandra.cqlengine.management import sync_table
 import csv
+from pathlib import Path
 
 def get_valid_number(number: str):
     if number.isdigit():
@@ -32,8 +33,8 @@ class Game(Model):
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Game)
-games_csv_file_path = 'Data\\games.csv'
-teams_csv_file_path = 'Data\\teams.csv'
+games_csv_file_path = Path(__file__).parent.parent / 'Data/games.csv'
+teams_csv_file_path = Path(__file__).parent.parent / 'Data/teams.csv'
 
 with open(teams_csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)

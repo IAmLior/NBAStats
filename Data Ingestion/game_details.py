@@ -4,6 +4,7 @@ from cassandra.cqlengine import connection
 from cassandra.cqlengine.management import sync_table
 from datetime import datetime
 import csv
+from pathlib import Path
 
 def get_valid_number(number: str):
     if number.isdigit():
@@ -41,8 +42,8 @@ class GamePerPlayer(Model):
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(GamePerPlayer)
-gpp_csv_file_path = 'Data\\games_details.csv'
-games_csv_file_path = 'Data\\games.csv'
+gpp_csv_file_path = Path(__file__).parent.parent / 'Data/games_details.csv'
+games_csv_file_path = Path(__file__).parent.parent  / 'Data/games.csv'
 
 with open(games_csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)
