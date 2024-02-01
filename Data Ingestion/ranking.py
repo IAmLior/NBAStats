@@ -5,20 +5,22 @@ from cassandra.cqlengine.management import sync_table
 import csv
 
 class Rank(Model):
-    team_id = columns.Integer(primary_key=True)
-    season = columns.Integer(primary_key=True)
+    team_id = columns.Integer(partition_key=True)
+    season = columns.Integer(partition_key=True)
     standing_date = columns.Date(primary_key=True)
     conference = columns.Text()
     games = columns.Integer()
     wins = columns.Integer()
     losses = columns.Integer()
     win_pct = columns.Float()
+    home_record = columns.Text()
+    road_record = columns.Text()
 
     __table_name__ = "Ranking"
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Rank)
-csv_file_path = 'Data\\ranking.csv'
+csv_file_path = '/Users/dviryomtov/NBAStats/Data/ranking.csv'
 
 with open(csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)
@@ -41,7 +43,9 @@ for rank in ranking_mapping:
         games = rank['G'],
         wins = rank['W'],
         losses = rank['L'],
-        win_pct = rank['W_PCT']
+        win_pct = rank['W_PCT'],
+        home_record = rank['HOME_RECORD'],
+        road_record = rank['ROAD_RECORD']
     )
     print(f"Created rank for team {rank['TEAM_ID']} by date {rank['STANDINGSDATE']} in season{rank['SEASON_ID'][1:]}")
 
