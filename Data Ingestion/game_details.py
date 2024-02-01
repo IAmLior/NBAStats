@@ -16,6 +16,7 @@ def get_valid_number(number: str):
 
 class GamePerPlayer(Model):
     game_id = columns.Integer(primary_key=True)
+    game_date = columns.Date()
     team_id = columns.Integer(primary_key=True)
     player_id = columns.Integer(primary_key=True)
     start_position = columns.Text(partition_key=True, max_length=1)
@@ -40,9 +41,16 @@ class GamePerPlayer(Model):
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(GamePerPlayer)
-csv_file_path = 'Data\\games_details.csv'
+gpp_csv_file_path = 'Data\\games_details.csv'
+games_csv_file_path = 'Data\\games.csv'
 
-with open(csv_file_path, mode='r') as data:
+with open(games_csv_file_path, mode='r') as data:
+    csv_reader = csv.DictReader(data)
+    games_dates_mapping = {}
+    for row in csv_reader:
+        games_dates_mapping[row['GAME_ID']] = row['GAME_DATE_EST']
+
+with open(gpp_csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)
     game_per_player_mapping = []
     for row in csv_reader:
@@ -59,6 +67,7 @@ for gpp in game_per_player_mapping:
 
     gpp_model = GamePerPlayer.create(
         game_id = gpp['GAME_ID'],
+        game_date = games_dates_mapping[gpp['GAME_ID']],
         team_id = gpp['TEAM_ID'],
         player_id = gpp['PLAYER_ID'],
         start_position = gpp['START_POSITION'] if gpp['START_POSITION'] is not None else 'B',
