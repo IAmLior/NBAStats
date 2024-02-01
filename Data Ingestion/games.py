@@ -18,6 +18,7 @@ class Game(Model):
     game_date = columns.Date()
     season = columns.Integer(partition_key=True)
     team_id = columns.Integer(partition_key=True)
+    team_nickname = columns.Text()
     pts = columns.Integer()
     fg_pct = columns.Float()
     ft_pct = columns.Float()
@@ -25,15 +26,22 @@ class Game(Model):
     ast = columns.Integer()
     reb = columns.Integer()
     is_win = columns.Boolean()
-    is_home_team = columns.Boolean(partition_key=True)
+    is_home_team = columns.Boolean()
 
     __table_name__ = "Games"
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Game)
-csv_file_path = '/Users/dviryomtov/NBAStats/Data/games.csv'
+games_csv_file_path = 'Data\\games.csv'
+teams_csv_file_path = 'Data\\teams.csv'
 
-with open(csv_file_path, mode='r') as data:
+with open(teams_csv_file_path, mode='r') as data:
+    csv_reader = csv.DictReader(data)
+    teams_nicknames_mapping = {}
+    for row in csv_reader:
+        teams_nicknames_mapping[row['TEAM_ID']] = row['NICKNAME']
+
+with open(games_csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)
     games_mapping = []
     for row in csv_reader:
@@ -48,6 +56,7 @@ for game in games_mapping:
         game_id = game['GAME_ID'],
         game_date = game['GAME_DATE_EST'],
         team_id = game['HOME_TEAM_ID'],
+        team_nickname = teams_nicknames_mapping[game['HOME_TEAM_ID']],
         season = game['SEASON'],
         pts = get_valid_number(game['PTS_home']),
         fg_pct = game['FG_PCT_home'],
@@ -62,6 +71,7 @@ for game in games_mapping:
         game_id = game['GAME_ID'],
         game_date = game['GAME_DATE_EST'],
         team_id = game['VISITOR_TEAM_ID'],
+        team_nickname = teams_nicknames_mapping[game['VISITOR_TEAM_ID']],
         season = game['SEASON'],
         pts = get_valid_number(game['PTS_away']),
         fg_pct = game['FG_PCT_away'],

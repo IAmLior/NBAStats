@@ -11,12 +11,16 @@ cassandra_keyspace_name = 'nbatests'
 cassandra_session.set_keyspace(cassandra_keyspace_name)
 cassandra_session.row_factory = dict_factory
 
-games_query = "select season, team_id, avg(pts) as avg, is_home_team from games group by season, team_id, is_home_team ALLOW FILTERING;"
-games_prepared_query = cassandra_session.prepare(games_query)
-games_results = cassandra_session.execute(games_prepared_query)
-games_df = pd.DataFrame(games_results)
-home_df = games_df[games_df['is_home_team'] == True].rename(columns={'avg': 'avg_home'}).drop(columns=['is_home_team'])
-away_df = games_df[games_df['is_home_team'] == False].rename(columns={'avg': 'avg_away'}).drop(columns=['is_home_team'])
+home_games_query = f"select season, team_id, avg(pts) as avg from games where is_home_team = True group by season, team_id ALLOW FILTERING;"
+home_games_prepared_query = cassandra_session.prepare(home_games_query)
+home_games_results = cassandra_session.execute(home_games_prepared_query)
+home_df = pd.DataFrame(home_games_results).rename(columns={'avg': 'avg_home'})
+
+away_games_query = f"select season, team_id, avg(pts) as avg from games where is_home_team = False group by season, team_id ALLOW FILTERING;"
+away_games_prepared_query = cassandra_session.prepare(away_games_query)
+away_games_results = cassandra_session.execute(away_games_prepared_query)
+away_df = pd.DataFrame(away_games_results).rename(columns={'avg': 'avg_away'})
+
 games_df = pd.merge(home_df[['season', 'team_id', 'avg_home']], away_df[['season', 'team_id', 'avg_away']], on=['season', 'team_id'])
 
 teams_query = "select team_id, abbreviation, nickname from teams"
