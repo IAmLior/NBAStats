@@ -7,6 +7,4 @@ Using Kaggle "NBA games data" for achieving interesting insights over this data
     ```docker run -p 9042:9042 --rm --name cassandra -d cassandra:latest```
     ```docker exec -it cassandra cqlsh```
 2. Configure the NBAStats keyspace on your cassandra cluster.
-    ```create keyspace NBATests with replication = { 'class': 'SimpleStrategy', 'replication_factor': 1 };```
-
-
+    ```CREATE KEYSPACE IF NOT EXISTS NbaTests WITH replication = { 'class': 'SimpleStrategy', 'replication_factor': 1 };```
