@@ -6,6 +6,7 @@ import csv
 
 class Rank(Model):
     team_id = columns.Integer(partition_key=True)
+    team_nickname = columns.Text()
     season = columns.Integer(partition_key=True)
     standing_date = columns.Date(primary_key=True)
     conference = columns.Text()
@@ -20,9 +21,16 @@ class Rank(Model):
 
 connection.setup(['127.0.0.1'], 'nbatests')
 sync_table(Rank)
-csv_file_path = '/Users/dviryomtov/NBAStats/Data/ranking.csv'
+ranking_csv_file_path = 'Data\\ranking.csv'
+teams_csv_file_path = 'Data\\teams.csv'
 
-with open(csv_file_path, mode='r') as data:
+with open(teams_csv_file_path, mode='r') as data:
+    csv_reader = csv.DictReader(data)
+    teams_nicknames_mapping = {}
+    for row in csv_reader:
+        teams_nicknames_mapping[row['TEAM_ID']] = row['NICKNAME']
+
+with open(ranking_csv_file_path, mode='r') as data:
     csv_reader = csv.DictReader(data)
     ranking_mapping = []
     for row in csv_reader:
@@ -37,6 +45,7 @@ for rank in ranking_mapping:
 
     rank_model = Rank.create(
         team_id = rank['TEAM_ID'],
+        team_nickname = teams_nicknames_mapping[rank['TEAM_ID']],
         season = rank['SEASON_ID'][1:],
         standing_date = rank['STANDINGSDATE'],
         conference = rank['CONFERENCE'],
