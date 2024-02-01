@@ -25,7 +25,7 @@ class Game(Model):
     ast = columns.Integer()
     reb = columns.Integer()
     is_win = columns.Boolean()
-    is_home_team = columns.Boolean(partition_key=True)
+    is_home_team = columns.Boolean()
 
     __table_name__ = "Games"
 
